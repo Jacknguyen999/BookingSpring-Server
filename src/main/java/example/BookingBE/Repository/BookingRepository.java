@@ -1,7 +1,19 @@
 package example.BookingBE.Repository;
 
 
+import example.BookingBE.Entity.Booking;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface BookingRepository extends JpaRepository<Booking, Long> {
 
 
-public interface BookingRepository {
+
+    List<Booking> findByRoomId(Long roomId);
+
+    List<Booking> findByBookingConfirmationCode(String confirmationCode);
+
+    List<Booking> findByUserId(Long userId);
+
 }
