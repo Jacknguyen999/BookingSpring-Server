@@ -11,4 +11,20 @@ public class LoginRequest {
     private String email;
     @NotBlank(message = "Password is mandatory")
     private String password;
+
+    public @NotBlank(message = "Email is mandatory") String getEmail() {
+        return email;
+    }
+
+    public void setEmail(@NotBlank(message = "Email is mandatory") String email) {
+        this.email = email;
+    }
+
+    public @NotBlank(message = "Password is mandatory") String getPassword() {
+        return password;
+    }
+
+    public void setPassword(@NotBlank(message = "Password is mandatory") String password) {
+        this.password = password;
+    }
 }
