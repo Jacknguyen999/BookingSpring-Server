@@ -24,6 +24,11 @@ public class Room {
 
     private String roomType;
     private BigDecimal roomPrice;
+    private String roomDescription;
+    private String roomImageUrl;
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Booking> bookings = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -65,11 +70,7 @@ public class Room {
         this.roomImageUrl = roomImageUrl;
     }
 
-    private String roomDescription;
-    private String roomImageUrl;
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<Booking> bookings = new ArrayList<>();
 
     public List<Booking> getBookings() {
         return bookings;

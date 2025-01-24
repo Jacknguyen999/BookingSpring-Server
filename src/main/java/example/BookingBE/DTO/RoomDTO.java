@@ -11,9 +11,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Data
-@Getter
-@Setter
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RoomDTO {
     public void setBookings(List<BookingDTO> bookings) {
@@ -49,6 +47,42 @@ public class RoomDTO {
     private String roomImageUrl;
 
     private List<BookingDTO> bookings;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public BigDecimal getRoomPrice() {
+        return roomPrice;
+    }
+
+    public String getRoomDescription() {
+        return roomDescription;
+    }
+
+    public String getRoomImageUrl() {
+        return roomImageUrl;
+    }
+
+    public List<BookingDTO> getBookings() {
+        return bookings;
+    }
+
+    @Override
+    public String toString() {
+        return "RoomDTO{" +
+                "id=" + id +
+                ", roomType='" + roomType + '\'' +
+                ", roomPrice=" + roomPrice +
+                ", roomDescription='" + roomDescription + '\'' +
+                ", roomImageUrl='" + roomImageUrl + '\'' +
+                '}';
+    }
+
 
 
 }

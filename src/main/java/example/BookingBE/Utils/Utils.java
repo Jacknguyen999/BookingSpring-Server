@@ -47,16 +47,22 @@ public class Utils {
 
     public static RoomDTO mapRoomEntityToRoomDTO(Room room) {
         RoomDTO roomDTO = new RoomDTO();
+
+        // Ánh xạ các trường và in log để kiểm tra
         roomDTO.setId(room.getId());
+//        System.out.println("Mapping ID: " + room.getId());
         roomDTO.setRoomType(room.getRoomType());
+//        System.out.println("Mapping Room Type: " + room.getRoomType());
         roomDTO.setRoomPrice(room.getRoomPrice());
+//        System.out.println("Mapping Room Price: " + room.getRoomPrice());
         roomDTO.setRoomImageUrl(room.getRoomImageUrl());
+//        System.out.println("Mapping Room Image URL: " + room.getRoomImageUrl());
         roomDTO.setRoomDescription(room.getRoomDescription());
+//        System.out.println("Mapping Room Description: " + room.getRoomDescription());
 
         return roomDTO;
-
-
     }
+
 
     public static BookingDTO mapBookingEntityToBookingDTO(Booking booking) {
         BookingDTO bookingDTO = new BookingDTO();
