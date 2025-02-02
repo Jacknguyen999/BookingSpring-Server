@@ -11,3 +11,5 @@ public class BookingBeApplication {
 	}
 
 }
+
+// run in command : mvn spring-boot:run

@@ -2,15 +2,14 @@ package example.BookingBE.Entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -30,51 +29,7 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Booking> bookings = new ArrayList<>();
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getRoomType() {
-        return roomType;
-    }
-
-    public void setRoomType(String roomType) {
-        this.roomType = roomType;
-    }
-
-    public BigDecimal getRoomPrice() {
-        return roomPrice;
-    }
-
-    public void setRoomPrice(BigDecimal roomPrice) {
-        this.roomPrice = roomPrice;
-    }
-
-    public String getRoomDescription() {
-        return roomDescription;
-    }
-
-    public void setRoomDescription(String roomDescription) {
-        this.roomDescription = roomDescription;
-    }
-
-    public String getRoomImageUrl() {
-        return roomImageUrl;
-    }
-
-    public void setRoomImageUrl(String roomImageUrl) {
-        this.roomImageUrl = roomImageUrl;
-    }
-
-
-
-    public List<Booking> getBookings() {
-        return bookings;
-    }
 
     @Override
     public String toString() {

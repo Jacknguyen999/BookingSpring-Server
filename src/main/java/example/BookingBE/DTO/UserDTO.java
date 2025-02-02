@@ -27,51 +27,5 @@ public class UserDTO {
 
     private List<BookingDTO> bookings = new ArrayList<>();
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPhoneNum() {
-        return phoneNum;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public List<BookingDTO> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(List<BookingDTO> bookings) {
-        this.bookings = bookings;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }
