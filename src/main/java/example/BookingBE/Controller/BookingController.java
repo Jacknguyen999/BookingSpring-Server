@@ -37,7 +37,7 @@ public class BookingController {
     }
 
     @GetMapping("/get-by-confirmation-code/{confirmationCode}")
-    public ResponseEntity<ResponseAPI> getBookingbyConfirmationCode (
+    public ResponseEntity<ResponseAPI> getBookingByConfirmationCode(
             @PathVariable String confirmationCode
     ){
         ResponseAPI responseAPI = bookingService.findBookingByConfirmationCode(confirmationCode);

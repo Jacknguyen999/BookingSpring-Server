@@ -2,6 +2,7 @@ package example.BookingBE.Service.Booking;
 
 
 import example.BookingBE.DTO.BookingDTO;
+import example.BookingBE.DTO.UserDTO;
 import example.BookingBE.Entity.Booking;
 import example.BookingBE.Entity.Room;
 import example.BookingBE.Entity.User;
@@ -43,7 +44,6 @@ public class BookingServiceImp implements BookingService {
             }
             Room room = roomRepository.findById(roomId).orElseThrow(() -> new GlobalException("Room not found"));
             User user = userRepository.findById(userId).orElseThrow(() -> new GlobalException("User not found"));
-
             List<Booking> existingBooking = room.getBookings();
 
             if ( !roomIsAvailable(bookingRequest,existingBooking)){
@@ -58,13 +58,18 @@ public class BookingServiceImp implements BookingService {
 
             bookingRepository.save(bookingRequest);
 
+            user.getUserBookings().add(bookingRequest);
+            userRepository.save(user);
+
+
             response.setStatusCode(200);
             response.setMessage("Success");
             response.setBookingConfirmationCode(bookingConfirmationCode);
 
 
+            UserDTO userDTO = Utils.mapUserEntityToUserDTOPLusUserBookingAndRoom(user);
 
-
+//            response.setUser(userDTO);
 
 
         } catch (GlobalException e) {

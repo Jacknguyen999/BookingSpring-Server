@@ -4,6 +4,7 @@ package example.BookingBE.Entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,43 +18,21 @@ import java.time.LocalDate;
 @Table(name = "bookings")
 public class Booking {
 
-    public Long getId() {
-        return id;
-    }
 
-    public Room getRoom() {
-        return room;
-    }
 
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public @NotBlank(message = "check In Date is mandatory") LocalDate getCheckInDate() {
+    public @NotNull(message = "check In Date is mandatory") LocalDate getCheckInDate() {
         return checkInDate;
     }
 
-    public void setCheckInDate(@NotBlank(message = "check In Date is mandatory") LocalDate checkInDate) {
+    public void setCheckInDate(@NotNull(message = "check In Date is mandatory") LocalDate checkInDate) {
         this.checkInDate = checkInDate;
     }
 
-    public @NotBlank(message = "check Out Date is mandatory") LocalDate getCheckOutDate() {
+    public @NotNull(message = "check Out Date is mandatory") LocalDate getCheckOutDate() {
         return checkOutDate;
     }
 
-    public void setCheckOutDate(@NotBlank(message = "check Out Date is mandatory") LocalDate checkOutDate) {
+    public void setCheckOutDate(@NotNull(message = "check Out Date is mandatory") LocalDate checkOutDate) {
         this.checkOutDate = checkOutDate;
     }
 
@@ -67,29 +46,14 @@ public class Booking {
         return numOfChildren;
     }
 
-    public int getTotalNumberOfGuests() {
-        return totalNumberOfGuests;
-    }
-
-    public void setTotalNumberOfGuests(int totalNumberOfGuests) {
-        this.totalNumberOfGuests = totalNumberOfGuests;
-    }
-
-    public String getBookingConfirmationCode() {
-        return bookingConfirmationCode;
-    }
-
-    public void setBookingConfirmationCode(String bookingConfirmationCode) {
-        this.bookingConfirmationCode = bookingConfirmationCode;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "check In Date is mandatory")
+    @NotNull(message = "check In Date is mandatory")
     private LocalDate checkInDate;
-    @NotBlank(message = "check Out Date is mandatory")
+    @NotNull(message = "check Out Date is mandatory")
     private LocalDate checkOutDate;
 
     @Min(value = 1, message = "Number of adults must be at least 1")

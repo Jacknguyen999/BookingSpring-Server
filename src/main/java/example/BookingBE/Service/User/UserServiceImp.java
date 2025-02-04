@@ -193,7 +193,7 @@ public class UserServiceImp implements UserService{
         ResponseAPI responseAPI = new ResponseAPI();
         try {
             User user = userRepository.findByEmail(email).orElseThrow(() -> new GlobalException("User Not Found"));
-            UserDTO userDTO = Utils.mapUserEntityToUserDTO(user);
+            UserDTO userDTO = Utils.mapUserEntityToUserDTOPLusUserBookingAndRoom(user);
             responseAPI.setStatusCode(200);
             responseAPI.setMessage("successful");
             responseAPI.setUser(userDTO);
