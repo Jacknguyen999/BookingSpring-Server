@@ -128,7 +128,20 @@ public class BookingServiceImp implements BookingService {
 
     @Override
     public ResponseAPI cancelBooking(Long bookingId) {
-        return null;
+        ResponseAPI responseAPI = new ResponseAPI();
+        try{
+            bookingRepository.findById(bookingId).orElseThrow(()-> new GlobalException("Booking not found "));
+            bookingRepository.deleteById(bookingId);
+            responseAPI.setStatusCode(200);
+            responseAPI.setMessage("Successfully");
+        } catch (GlobalException e) {
+            responseAPI.setStatusCode(404);
+            responseAPI.setMessage(e.getMessage());
+        }  catch (Exception e) {
+            responseAPI.setStatusCode(500);
+            responseAPI.setMessage("Error delete booking " +e.getMessage());
+        }
+        return responseAPI;
     }
 
 

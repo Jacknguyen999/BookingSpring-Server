@@ -57,7 +57,7 @@ public class UserController {
 
 
     @GetMapping("/get_user_booking/{userId}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+
     public ResponseEntity<ResponseAPI> getUserBooking(
             @PathVariable("userId") String userId
     ){
