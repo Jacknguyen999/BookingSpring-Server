@@ -1,195 +1,173 @@
-﻿BookingHotelBE
+# BookingHotelBE
 
-\-- Swagger docs
+Welcome to the **BookingHotelBE** repository! This project is the backend system for a hotel booking platform. It provides APIs for user authentication, room management, booking processing, and more.
 
-http://{your\_local\_host}/swagger-ui.html
+---
 
-BookingHotelBE
+## Features
 
-Welcome to the BookingHotelBE repository! This project is the backend system for a hotel booking platform. It provides APIs for user authentication, room management, booking processing, and more.
+- User Authentication and Authorization (JWT-based)
+- Role Management (Admin, Customers, Hotel Owners)
+- Hotel and Room CRUD Operations
+- Booking Management
+- Payment Gateway Integration
+- Database Connectivity and Optimization
 
-Features
+---
 
-User Authentication and Authorization (JWT-based)
+## Tech Stack
 
-Role Management (Admin, Customers, Hotel Owners)
+- **Programming Language**: Java
+- **Framework**: Spring Boot
+- **Database**: MySQL
+- **Authentication**: JSON Web Tokens (JWT)
+- **Others**: Spring Security, Hibernate, and more
 
-Hotel and Room CRUD Operations
+---
 
-Booking Management
+## Getting Started
 
-Payment Gateway Integration
-
-Database Connectivity and Optimization
-
-Tech Stack
-
-Programming Language: Java
-
-Framework: Spring Boot
-
-Database: MySQL
-
-Authentication: JSON Web Tokens (JWT)
-
-Others: Spring Security, Hibernate, and more
-
-Getting Started
-
-Prerequisites
+### Prerequisites
 
 Ensure you have the following installed:
 
-Java JDK (v11 or later)
+- [Java JDK](https://www.oracle.com/java/technologies/javase-downloads.html) (v11 or later)
+- [MySQL](https://dev.mysql.com/downloads/installer/)
+- [Maven](https://maven.apache.org/install.html)
 
-MySQL
+### Installation
 
-Maven
+1. Clone this repository:
 
-Installation
+   ```bash
+   git clone https://github.com/Jacknguyen999/BookingHotelBE.git
+   cd BookingHotelBE
+   ```
 
-Clone this repository:
+2. Configure the application properties:
 
-git clone https://github.com/Jacknguyen999/BookingHotelBE.git
+   Update the `src/main/resources/application.properties` file with your database and other configuration details:
 
-cd BookingHotelBE
+   ```properties
+   server.port=8080
+   spring.datasource.url=jdbc:mysql://localhost:3306/booking_hotel_db
+   spring.datasource.username=your_username
+   spring.datasource.password=your_password
+   spring.jpa.hibernate.ddl-auto=update
+   jwt.secret=your_jwt_secret
+   payment.gateway.key=your_payment_gateway_key
+   ```
 
-Configure the application properties:
+3. Build and run the application:
 
-Update the src/main/resources/application.properties file with your database and other configuration details:
+   ```bash
+   mvn spring-boot:run
+   ```
 
-server.port=8080
+   The server will start at `http://localhost:8080`.
 
-spring.datasource.url=jdbc:mysql://localhost:3306/booking\_hotel\_db
+---
 
-spring.datasource.username=your\_username
+## Directory Structure
 
-spring.datasource.password=your\_password
+Below is the main structure of the `src` folder:
 
-spring.jpa.hibernate.ddl-auto=update
-
-jwt.secret=your\_jwt\_secret
-
-payment.gateway.key=your\_payment\_gateway\_key
-
-Build and run the application:
-
-mvn spring-boot:run
-
-The server will start at http://localhost:8080.
-
-Directory Structure
-
-Below is the main structure of the src folder:
-
+```
 src/
-
 ├── main/
+   ├── java/
+   │   └── com/
+   │       └── example/
+   │           └── bookinghotel/
+   │               ├── BookingApplication.java
+   │               ├── controller/
+   │               ├── model/
+   │               ├── repository/
+   │               ├── request/
+   │               ├── response/
+   │               └── service/
+   └── resources/
+       └── application.properties
+```
 
-├── java/
+---
 
-│ └── com/
+## API Documentation
 
-│ └── example/
+### Base URL
 
-│ └── bookinghotel/
+`http://localhost:8080/api`
 
-│ ├── BookingApplication.java
+### Swagger UI
+`http://localhost:8080/swagger-ui/index.html`
 
-│ ├── controller/
+### Endpoints
 
-│ ├── model/
+#### User Authentication
+- `POST /api/auth/register` - Register a new user
+- `POST /api/auth/login` - Log in a user
 
-│ ├── repository/
+#### Hotels & Rooms
+- `GET /api/hotels` - Get all hotels
+- `POST /api/hotels` - Add a new hotel (Admin only)
+- `GET /api/hotels/:id/rooms` - Get all rooms for a specific hotel
+- `POST /api/rooms` - Add a new room (Admin only)
+- `PUT /api/rooms/:id` - Update a room (Admin only)
+- `DELETE /api/rooms/:id` - Delete a room (Admin only)
 
-│ ├── request/
+#### Bookings
+- `POST /api/bookings` - Place a booking
+- `GET /api/bookings/:userId` - Get all bookings for a specific user
+- `PUT /api/bookings/:id/status` - Update booking status (Admin/Hotel Owner)
 
-│ ├── response/
+#### Payments
+- `POST /api/payments` - Process a payment
 
-│ └── service/
+*(Full documentation can be found in the `/docs` folder or via Swagger UI if integrated.)*
 
-└── resources/
+---
 
-└── application.properties
-
-API Documentation
-
-Base URL
-
-http://localhost:8080/api
-
-Swagger UI
-
-http://localhost:8080/swagger-ui/index.html
-
-Endpoints
-
-User Authentication
-
-POST /api/auth/register - Register a new user
-
-POST /api/auth/login - Log in a user
-
-Hotels & Rooms
-
-GET /api/hotels - Get all hotels
-
-POST /api/hotels - Add a new hotel (Admin only)
-
-GET /api/hotels/:id/rooms - Get all rooms for a specific hotel
-
-POST /api/rooms - Add a new room (Admin only)
-
-PUT /api/rooms/:id - Update a room (Admin only)
-
-DELETE /api/rooms/:id - Delete a room (Admin only)
-
-Bookings
-
-POST /api/bookings - Place a booking
-
-GET /api/bookings/:userId - Get all bookings for a specific user
-
-PUT /api/bookings/:id/status - Update booking status (Admin/Hotel Owner)
-
-Payments
-
-POST /api/payments - Process a payment
-
-(Full documentation can be found in the /docs folder or via Swagger UI if integrated.)
-
-Contributing
+## Contributing
 
 Contributions are welcome! Please follow these steps:
 
-Fork the repository
+1. Fork the repository
+2. Create a feature branch:
 
-Create a feature branch:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
 
-git checkout -b feature/your-feature-name
+3. Commit your changes:
 
-Commit your changes:
+   ```bash
+   git commit -m "Add your feature"
+   ```
 
-git commit -m "Add your feature"
+4. Push the branch:
 
-Push the branch:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
 
-git push origin feature/your-feature-name
+5. Open a pull request
 
-Open a pull request
+---
 
-License
+## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-Contact
+---
+
+## Contact
 
 For any inquiries, please reach out to:
 
-Author: Jack Nguyen
+- **Author**: Jack Nguyen
+- **Email**: jacknguyen999@example.com
+- **GitHub**: [Jacknguyen999](https://github.com/Jacknguyen999)
 
-Email: jacknguyen999@example.com
-
-GitHub: Jacknguyen999
+---
 
 Thank you for checking out the BookingHotelBE project! Your feedback and contributions are greatly appreciated!
