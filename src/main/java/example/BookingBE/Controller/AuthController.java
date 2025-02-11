@@ -5,6 +5,7 @@ import example.BookingBE.Entity.User;
 import example.BookingBE.Request.LoginRequest;
 import example.BookingBE.Response.ResponseAPI;
 import example.BookingBE.Service.User.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Auth", description = "API for authentication ")
 public class AuthController {
 
     @Autowired
