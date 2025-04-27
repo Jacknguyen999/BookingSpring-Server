@@ -1,7 +1,6 @@
 package example.BookingBE.Controller;
 
 
-import example.BookingBE.Entity.Room;
 import example.BookingBE.Repository.RoomRepository;
 import example.BookingBE.Response.ResponseAPI;
 import example.BookingBE.Service.Room.RoomService;
@@ -30,24 +29,23 @@ public class RoomController {
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ResponseAPI> addNewRoom(
-            @RequestParam(value = "photo", required = false) MultipartFile photo,
+            @RequestParam(value = "photos", required = false) List<MultipartFile> photos,
             @RequestParam(value = "roomType", required = false) String roomType,
             @RequestParam(value = "roomPrice", required = false) BigDecimal roomPrice,
             @RequestParam(value = "roomDescription", required = false) String roomDescription) {
 
-        if (photo == null || photo.isEmpty() ||
+        if (photos == null || photos.isEmpty() ||
                 roomType == null || roomType.isBlank() ||
                 roomPrice == null ||
                 roomDescription == null || roomDescription.isBlank()) {
             ResponseAPI response = new ResponseAPI();
             response.setStatusCode(400);
-            response.setMessage("Please provide values for all fields (photo, roomType, roomPrice, roomDescription)");
+            response.setMessage("Please provide values for all fields (photos, roomType, roomPrice, roomDescription)");
             return ResponseEntity.status(response.getStatusCode()).body(response);
         }
 
-        ResponseAPI response = roomService.addNewRoom(photo, roomType, roomPrice, roomDescription);
+        ResponseAPI response = roomService.addNewRoom(photos, roomType, roomPrice, roomDescription);
         return ResponseEntity.status(response.getStatusCode()).body(response);
-
     }
     @GetMapping("/all")
     public ResponseEntity<ResponseAPI> getAllRooms() {
@@ -105,20 +103,12 @@ public class RoomController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ResponseAPI> updateRoom(
             @PathVariable Long roomId,
-            @RequestParam(value = "photo", required = false) MultipartFile photo,
+            @RequestParam(value = "photos", required = false) List<MultipartFile> photos,
             @RequestParam(value = "roomType", required = false) String roomType,
             @RequestParam(value = "roomPrice", required = false) BigDecimal roomPrice,
             @RequestParam(value = "roomDescription", required = false) String roomDescription) {
 
-
-
-        ResponseAPI response = roomService.updateRoom(roomId, roomDescription, roomType, roomPrice, photo);
+        ResponseAPI response = roomService.updateRoom(roomId, roomDescription, roomType, roomPrice, photos);
         return ResponseEntity.status(response.getStatusCode()).body(response);
-
     }
-
-
-
-
-
 }

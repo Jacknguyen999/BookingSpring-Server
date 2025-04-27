@@ -2,7 +2,9 @@ package example.BookingBE.Entity;
 
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -24,7 +26,9 @@ public class Room {
     private String roomType;
     private BigDecimal roomPrice;
     private String roomDescription;
-    private String roomImageUrl;
+    @Column(length = 100)
+    @ElementCollection
+    private List<String> roomImageUrl;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Booking> bookings = new ArrayList<>();

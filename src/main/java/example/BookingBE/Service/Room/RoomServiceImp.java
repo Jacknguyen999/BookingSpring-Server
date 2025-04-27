@@ -3,7 +3,6 @@ package example.BookingBE.Service.Room;
 import example.BookingBE.DTO.RoomDTO;
 import example.BookingBE.Entity.Room;
 import example.BookingBE.Exception.GlobalException;
-import example.BookingBE.Repository.BookingRepository;
 import example.BookingBE.Repository.RoomRepository;
 import example.BookingBE.Response.ResponseAPI;
 import example.BookingBE.Service.AwsS3ServiceImp;
@@ -15,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,8 +23,8 @@ public class RoomServiceImp implements RoomService {
 
     @Autowired
     private RoomRepository roomRepository;
-    @Autowired
-    private BookingRepository bookingRepository;
+
+
 
     @Autowired
     private AwsS3ServiceImp awsS3Service;
@@ -32,12 +32,12 @@ public class RoomServiceImp implements RoomService {
 
 
     @Override
-    public ResponseAPI addNewRoom(MultipartFile photo,
+    public ResponseAPI addNewRoom(List<MultipartFile> photos,
                                   String roomType, BigDecimal roomPrice,
                                   String description) {
         ResponseAPI response = new ResponseAPI();
         try {
-            String imageURL = awsS3Service.saveImagestoS3(photo);
+            List<String> imageURL = awsS3Service.saveImagestoS3(photos);
             Room room = new Room();
             room.setRoomImageUrl(imageURL);
             room.setRoomType(roomType);
@@ -116,18 +116,26 @@ public class RoomServiceImp implements RoomService {
                                   String description,
                                   String roomType,
                                   BigDecimal roomPrice,
-                                  MultipartFile photo) {
+                                  List<MultipartFile> photos) {
         ResponseAPI response = new ResponseAPI();
         try{
-            String imgURl = null;
-            if(photo != null && !photo.isEmpty()){
-                imgURl = awsS3Service.saveImagestoS3(photo);
+            List<String> imgURl = null;
+            if(photos != null && !photos.isEmpty()){
+                imgURl = awsS3Service.saveImagestoS3(photos);
             }
             Room room = roomRepository.findById(roomId).orElseThrow(() -> new GlobalException("Room Not Found"));
             if (roomType != null) room.setRoomType(roomType);
             if (roomPrice != null) room.setRoomPrice(roomPrice);
             if (description != null) room.setRoomDescription(description);
-            if (imgURl != null) room.setRoomImageUrl(imgURl);
+            if (imgURl != null) {
+                List<String> currentImages = room.getRoomImageUrl();
+                if (currentImages == null) {
+                    currentImages = new ArrayList<>();
+                }
+                currentImages.addAll(imgURl);
+                room.setRoomImageUrl(currentImages);
+            }
+
 
             Room updatedRoom = roomRepository.save(room);
             RoomDTO roomDTO = Utils.mapRoomEntityToRoomDTO(updatedRoom);
