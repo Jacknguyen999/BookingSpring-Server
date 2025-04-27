@@ -44,21 +44,29 @@ Ensure you have the following installed:
    cd BookingHotelBE
    ```
 
-2. Configure the application properties:
+2. Configure the environment variables:
 
-   Update the `src/main/resources/application.properties` file with your database and other configuration details:
+   Create a `.env` file in the root directory based on the provided `.env.example` file:
 
    ```properties
-   server.port=8080
-   spring.datasource.url=jdbc:mysql://localhost:3306/booking_hotel_db
-   spring.datasource.username=your_username
-   spring.datasource.password=your_password
-   spring.jpa.hibernate.ddl-auto=update
-   jwt.secret=your_jwt_secret
-   payment.gateway.key=your_payment_gateway_key
+   # AWS S3 Credentials
+   AWS_S3_SECRET_KEY=your_aws_s3_secret_key_here
+   AWS_S3_ACCESS_KEY=your_aws_s3_access_key_here
    ```
 
-3. Build and run the application:
+3. Configure the application properties (optional):
+
+   The `src/main/resources/application.properties` file already contains default values for database connection. You can update these if needed:
+
+   ```properties
+   server.port=8484
+   spring.datasource.url=jdbc:mysql://localhost:3306/BookingRoom?createDatabaseIfNotExist=true
+   spring.datasource.username=root
+   spring.datasource.password=your_password
+   spring.jpa.hibernate.ddl-auto=update
+   ```
+
+4. Build and run the application:
 
    ```bash
    mvn spring-boot:run
