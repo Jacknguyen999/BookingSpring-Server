@@ -36,7 +36,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http, WebMvcConfigurer corsConfigurer) throws Exception {
         http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(Authorize -> Authorize
-                        .requestMatchers("/auth/**", "/room/**", "/bookings/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/auth/**", "/room/**", "/bookings/**", "/swagger-ui/**", "/v3/api-docs/**", "/api/chatbot/**").permitAll()
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtAuthFilter, BasicAuthenticationFilter.class)

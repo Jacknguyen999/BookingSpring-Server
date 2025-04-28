@@ -1,0 +1,555 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6",
+    "name": "BookingBE API",
+    "description": "API collection for the Hotel Booking Backend System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "description": "Endpoints for user registration and login",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john.doe@example.com\",\n    \"phoneNum\": \"1234567890\",\n    \"password\": \"password123\",\n    \"role\": \"USER\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8484/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["auth", "register"]
+            },
+            "description": "Register a new user with the system"
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"john.doe@example.com\",\n    \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8484/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["auth", "login"]
+            },
+            "description": "Login with email and password to get JWT token"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "description": "Endpoints for user management",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "description": "JWT token received after login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/users/all",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["users", "all"]
+            },
+            "description": "Get all users (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "description": "JWT token received after login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/users/get_by_id/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["users", "get_by_id", "1"]
+            },
+            "description": "Get user details by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "description": "JWT token received after login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/users/delete_user/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["users", "delete_user", "1"]
+            },
+            "description": "Delete a user by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Current User Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "description": "JWT token received after login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/users/get_current_user_profile",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["users", "get_current_user_profile"]
+            },
+            "description": "Get the profile of the currently logged-in user"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Bookings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "description": "JWT token received after login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/users/get_user_booking/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["users", "get_user_booking", "1"]
+            },
+            "description": "Get all bookings for a specific user"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Rooms",
+      "description": "Endpoints for room management",
+      "item": [
+        {
+          "name": "Add New Room",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "description": "JWT token received after login"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "photos",
+                  "type": "file",
+                  "description": "Room image"
+                },
+                {
+                  "key": "roomType",
+                  "value": "Deluxe",
+                  "type": "text"
+                },
+                {
+                  "key": "roomPrice",
+                  "value": "150.00",
+                  "type": "text"
+                },
+                {
+                  "key": "roomDescription",
+                  "value": "Spacious deluxe room with king-size bed and ocean view",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8484/room/add",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["room", "add"]
+            },
+            "description": "Add a new room (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Rooms",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8484/room/all",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["room", "all"]
+            },
+            "description": "Get all rooms"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Room Types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8484/room/types",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["room", "types"]
+            },
+            "description": "Get all available room types"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Room by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8484/room/room-by-id/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["room", "room-by-id", "1"]
+            },
+            "description": "Get room details by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Available Rooms",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8484/room/all-available-rooms",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["room", "all-available-rooms"]
+            },
+            "description": "Get all available rooms (not booked)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Available Rooms by Date and Type",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8484/room/available-rooms-by-date-and-type?checkInDate=2023-12-01&checkOutDate=2023-12-05&roomType=Deluxe",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["room", "available-rooms-by-date-and-type"],
+              "query": [
+                {
+                  "key": "checkInDate",
+                  "value": "2023-12-01"
+                },
+                {
+                  "key": "checkOutDate",
+                  "value": "2023-12-05"
+                },
+                {
+                  "key": "roomType",
+                  "value": "Deluxe"
+                }
+              ]
+            },
+            "description": "Get available rooms by date range and room type"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Room",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "description": "JWT token received after login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/room/delete/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["room", "delete", "1"]
+            },
+            "description": "Delete a room by ID (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Room",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "description": "JWT token received after login"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "photos",
+                  "type": "file",
+                  "description": "Room image (optional)"
+                },
+                {
+                  "key": "roomType",
+                  "value": "Premium Deluxe",
+                  "type": "text",
+                  "description": "Room type (optional)"
+                },
+                {
+                  "key": "roomPrice",
+                  "value": "200.00",
+                  "type": "text",
+                  "description": "Room price (optional)"
+                },
+                {
+                  "key": "roomDescription",
+                  "value": "Updated description with premium amenities",
+                  "type": "text",
+                  "description": "Room description (optional)"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8484/room/update/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["room", "update", "1"]
+            },
+            "description": "Update room details (Admin only)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bookings",
+      "description": "Endpoints for booking management",
+      "item": [
+        {
+          "name": "Book a Room",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "description": "JWT token received after login"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"checkInDate\": \"2023-12-10\",\n    \"checkOutDate\": \"2023-12-15\",\n    \"numOfAdults\": 2,\n    \"numOfChildren\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8484/bookings/book-room/1/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["bookings", "book-room", "1", "1"],
+              "description": "roomId/userId"
+            },
+            "description": "Book a room for a user"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Bookings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "description": "JWT token received after login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/bookings/all-booking",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["bookings", "all-booking"]
+            },
+            "description": "Get all bookings (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Booking by Confirmation Code",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8484/bookings/get-by-confirmation-code/ABC123XYZ",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["bookings", "get-by-confirmation-code", "ABC123XYZ"]
+            },
+            "description": "Get booking details by confirmation code"
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Booking",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "description": "JWT token received after login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/bookings/cancel/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["bookings", "cancel", "1"]
+            },
+            "description": "Cancel a booking by ID"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Home",
+      "description": "Home endpoint",
+      "item": [
+        {
+          "name": "Home",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8484/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": [""]
+            },
+            "description": "Home endpoint"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Auto-save the token from login response",
+          "if (pm.response.code === 200 && pm.request.url.toString().includes('/auth/login')) {",
+          "    var jsonData = pm.response.json();",
+          "    if (jsonData.token) {",
+          "        pm.environment.set('token', jsonData.token);",
+          "        console.log('Token saved to environment');",
+          "    }",
+          "}"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "token",
+      "value": "",
+      "type": "string",
+      "description": "JWT token received after login"
+    }
+  ]
+}
