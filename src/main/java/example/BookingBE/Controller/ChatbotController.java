@@ -1,5 +1,6 @@
 package example.BookingBE.Controller;
 
+import example.BookingBE.Service.BookingIntegrationService;
 import example.BookingBE.Service.ChatbotService;
 import example.BookingBE.model.ChatMessage;
 import example.BookingBE.model.ChatRequest;
@@ -23,6 +24,24 @@ public class ChatbotController {
 
     @Autowired
     private ChatbotService chatbotService;
+
+    @Autowired
+    private BookingIntegrationService bookingIntegrationService;
+
+    @GetMapping("/room-types")
+    @Operation(summary = "Get available room types", description = "Returns a list of available room types with details")
+    public ResponseEntity<ChatResponse> getRoomTypes() {
+        logger.info("Received direct request for room types");
+
+        try {
+            String roomTypesResponse = bookingIntegrationService.getAvailableRoomTypes();
+            ChatResponse response = new ChatResponse(roomTypesResponse);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            logger.error("Error getting room types: ", e);
+            return ResponseEntity.ok(new ChatResponse(false, "An unexpected error occurred. Please try again later."));
+        }
+    }
 
     @PostMapping("/chat")
     @Operation(summary = "Send a message to the chatbot", description = "Processes a user message and returns a response from the Gemini AI")

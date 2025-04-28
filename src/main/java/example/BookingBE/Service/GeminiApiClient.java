@@ -214,8 +214,18 @@ public class GeminiApiClient {
             // Build the complete prompt with system instructions, history, and current query
             StringBuilder fullPrompt = new StringBuilder();
             fullPrompt.append("You are a helpful assistant for a hotel booking website. ")
-                    .append("Provide concise and helpful information about hotel bookings, room availability, ")
-                    .append("amenities, and travel recommendations. Be friendly and professional.\n\n");
+                    .append("You can help users with booking rooms, checking availability, ")
+                    .append("viewing room details, and managing their reservations. ")
+                    .append("You can understand and respond to queries about room types, prices, ")
+                    .append("booking dates, and booking status. ")
+                    .append("You can also provide information about hotel amenities and travel recommendations. ")
+                    .append("Be friendly, professional, and concise in your responses.\n\n")
+                    .append("You can help users with the following tasks:\n")
+                    .append("1. Check room availability for specific dates\n")
+                    .append("2. Get information about room types and prices\n")
+                    .append("3. View booking details using a confirmation code\n")
+                    .append("4. View a user's bookings\n")
+                    .append("5. Get general information about the hotel and its amenities\n\n");
 
             // Add conversation history if available
             if (conversationHistory != null && !conversationHistory.isEmpty()) {
@@ -248,8 +258,18 @@ public class GeminiApiClient {
                     .append("    \"parts\": [")
                     .append("      {")
                     .append("        \"text\": \"You are a helpful assistant for a hotel booking website. ")
-                    .append("Provide concise and helpful information about hotel bookings, room availability, ")
-                    .append("amenities, and travel recommendations. Be friendly and professional.\\n\\n");
+                    .append("You can help users with booking rooms, checking availability, ")
+                    .append("viewing room details, and managing their reservations. ")
+                    .append("You can understand and respond to queries about room types, prices, ")
+                    .append("booking dates, and booking status. ")
+                    .append("You can also provide information about hotel amenities and travel recommendations. ")
+                    .append("Be friendly, professional, and concise in your responses.\\n\\n")
+                    .append("You can help users with the following tasks:\\n")
+                    .append("1. Check room availability for specific dates\\n")
+                    .append("2. Get information about room types and prices\\n")
+                    .append("3. View booking details using a confirmation code\\n")
+                    .append("4. View a user's bookings\\n")
+                    .append("5. Get general information about the hotel and its amenities\\n\\n");
 
             // Add conversation history if available
             if (conversationHistory != null && !conversationHistory.isEmpty()) {
@@ -287,8 +307,18 @@ public class GeminiApiClient {
             // Add system instructions as the first part
             ObjectNode systemPart = partsArray.addObject();
             systemPart.put("text", "You are a helpful assistant for a hotel booking website. " +
-                "Provide concise and helpful information about hotel bookings, room availability, " +
-                "amenities, and travel recommendations. Be friendly and professional.\n\n" +
+                "You can help users with booking rooms, checking availability, " +
+                "viewing room details, and managing their reservations. " +
+                "You can understand and respond to queries about room types, prices, " +
+                "booking dates, and booking status. " +
+                "You can also provide information about hotel amenities and travel recommendations. " +
+                "Be friendly, professional, and concise in your responses.\n\n" +
+                "You can help users with the following tasks:\n" +
+                "1. Check room availability for specific dates\n" +
+                "2. Get information about room types and prices\n" +
+                "3. View booking details using a confirmation code\n" +
+                "4. View a user's bookings\n" +
+                "5. Get general information about the hotel and its amenities\n\n" +
                 "User: " + prompt);
 
             // Convert to JSON string
@@ -302,8 +332,18 @@ public class GeminiApiClient {
                     + "    \"parts\": ["
                     + "      {"
                     + "        \"text\": \"You are a helpful assistant for a hotel booking website. "
-                    + "Provide concise and helpful information about hotel bookings, room availability, "
-                    + "amenities, and travel recommendations. Be friendly and professional.\\n\\n"
+                    + "You can help users with booking rooms, checking availability, "
+                    + "viewing room details, and managing their reservations. "
+                    + "You can understand and respond to queries about room types, prices, "
+                    + "booking dates, and booking status. "
+                    + "You can also provide information about hotel amenities and travel recommendations. "
+                    + "Be friendly, professional, and concise in your responses.\\n\\n"
+                    + "You can help users with the following tasks:\\n"
+                    + "1. Check room availability for specific dates\\n"
+                    + "2. Get information about room types and prices\\n"
+                    + "3. View booking details using a confirmation code\\n"
+                    + "4. View a user's bookings\\n"
+                    + "5. Get general information about the hotel and its amenities\\n\\n"
                     + "User: " + escapeJson(prompt) + "\""
                     + "      }"
                     + "    ]"
