@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -211,22 +212,39 @@ public class BookingIntegrationService {
             Optional<Booking> bookingOpt = bookingRepository.findByBookingConfirmationCode(confirmationCode);
 
             if (bookingOpt.isEmpty()) {
-                return "No booking found with confirmation code: " + confirmationCode;
+                StringBuilder response = new StringBuilder();
+                response.append("# Booking Not Found\n\n");
+                response.append("I could not find any booking with confirmation code: **").append(confirmationCode).append("**\n\n");
+                response.append("This could be due to one of the following reasons:\n\n");
+                response.append("1. The confirmation code may be incorrect\n");
+                response.append("2. The booking may have been cancelled\n");
+                response.append("3. The booking may not exist in our system\n\n");
+                response.append("Please check your confirmation code and try again, or contact our customer support for assistance.");
+                return response.toString();
             }
 
             Booking booking = bookingOpt.get();
             Room room = booking.getRoom();
             User user = booking.getUser();
 
-            StringBuilder response = new StringBuilder("Booking Information:\n\n");
-            response.append("Confirmation Code: ").append(booking.getBookingConfirmationCode()).append("\n");
-            response.append("Guest: ").append(user.getName()).append("\n");
-            response.append("Room Type: ").append(room.getRoomType()).append("\n");
-            response.append("Check-in Date: ").append(booking.getCheckInDate()).append("\n");
-            response.append("Check-out Date: ").append(booking.getCheckOutDate()).append("\n");
-            response.append("Number of Adults: ").append(booking.getNumOfAdults()).append("\n");
-            response.append("Number of Children: ").append(booking.getNumOfChildren()).append("\n");
-            response.append("Total Guests: ").append(booking.getTotalNumberOfGuests()).append("\n");
+            StringBuilder response = new StringBuilder("# Booking Information\n\n");
+            response.append("## Reservation Details\n\n");
+            response.append("**Confirmation Code:** ").append(booking.getBookingConfirmationCode()).append("\n");
+            response.append("**Guest:** ").append(user.getName()).append("\n");
+            response.append("**Email:** ").append(user.getEmail()).append("\n\n");
+
+            response.append("## Stay Information\n\n");
+            response.append("**Room Type:** ").append(room.getRoomType()).append("\n");
+            response.append("**Check-in Date:** ").append(booking.getCheckInDate().format(DateTimeFormatter.ofPattern("EEEE, MMMM d, yyyy"))).append("\n");
+            response.append("**Check-out Date:** ").append(booking.getCheckOutDate().format(DateTimeFormatter.ofPattern("EEEE, MMMM d, yyyy"))).append("\n");
+            response.append("**Length of Stay:** ").append(booking.getCheckInDate().until(booking.getCheckOutDate()).getDays()).append(" nights\n\n");
+
+            response.append("## Guest Information\n\n");
+            response.append("**Number of Adults:** ").append(booking.getNumOfAdults()).append("\n");
+            response.append("**Number of Children:** ").append(booking.getNumOfChildren()).append("\n");
+            response.append("**Total Guests:** ").append(booking.getTotalNumberOfGuests()).append("\n\n");
+
+            response.append("Thank you for choosing our hotel. We look forward to welcoming you!");
 
             return response.toString();
         } catch (Exception e) {

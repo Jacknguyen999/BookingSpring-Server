@@ -35,6 +35,10 @@ public class ChatbotIntentService {
     private static final Pattern DIRECT_ROOM_TYPES_PATTERN = Pattern.compile(
             "(?i).*show.*room.*available.*");
 
+    // Help pattern to detect queries about what questions can be asked
+    private static final Pattern HELP_QUERY_PATTERN = Pattern.compile(
+            "(?i).*(what|which|list|show|tell).*(question|questions|query|queries|ask|command|commands|help).*");
+
     private static final Pattern ROOM_AVAILABILITY_PATTERN = Pattern.compile(
             "(?i).*?(available|availability|check|find|search|book|reserve|get|from).*?" +
             "(room|rooms)?.*?" +
@@ -50,6 +54,10 @@ public class ChatbotIntentService {
             "(?i).*(booking|reservation).*" +
             "(info|information|details|status).*" +
             "(code|confirmation|id|number|#)\\s*[:\\s]?\\s*([a-zA-Z0-9]{5,}).*");
+
+    // Simple confirmation code pattern to catch just the code
+    private static final Pattern CONFIRMATION_CODE_PATTERN = Pattern.compile(
+            "(?i)^([a-zA-Z0-9]{5,})$");
 
     private static final Pattern USER_BOOKINGS_PATTERN = Pattern.compile(
             "(?i).*(my|user|customer)\\s*(booking|bookings|reservation|reservations).*" +
@@ -75,6 +83,26 @@ public class ChatbotIntentService {
 
         // Log the exact message for debugging
         logger.info("Processing exact message: '{}'", message);
+
+        // Check for help query
+        boolean helpQueryMatch = HELP_QUERY_PATTERN.matcher(message).matches();
+        logger.debug("Help query pattern match: {}", helpQueryMatch);
+
+        if (helpQueryMatch) {
+            logger.info("Detected help query intent");
+            return getHelpResponse();
+        }
+
+        // Check for confirmation code query (just the code)
+        Matcher confirmationCodeMatcher = CONFIRMATION_CODE_PATTERN.matcher(message);
+        boolean confirmationCodeMatch = confirmationCodeMatcher.matches();
+        logger.debug("Confirmation code pattern match: {}", confirmationCodeMatch);
+
+        if (confirmationCodeMatch) {
+            String confirmationCode = confirmationCodeMatcher.group(1);
+            logger.info("Detected confirmation code: {}", confirmationCode);
+            return bookingIntegrationService.getBookingInfo(confirmationCode);
+        }
 
         // Special case for the exact query "Show me the types of rooms available"
         if (message.equalsIgnoreCase("Show me the types of rooms available")) {
@@ -249,6 +277,47 @@ public class ChatbotIntentService {
         // No intent detected
         logger.debug("No booking-related intent detected");
         return null;
+    }
+
+    /**
+     * Generate a help response with a list of questions the user can ask
+     * @return Formatted string with available queries
+     */
+    private String getHelpResponse() {
+        StringBuilder response = new StringBuilder();
+        response.append("# What questions can I ask?\n\n");
+
+        response.append("## Room Types Queries\n\n");
+        response.append("- \"Show me the types of rooms available\"\n");
+        response.append("- \"What room types do you have?\"\n");
+        response.append("- \"List room types\"\n\n");
+
+        response.append("## Room Availability Queries\n\n");
+        response.append("- \"from 23/5 to 30/5\"\n");
+        response.append("- \"Check if you have rooms available between 05/23/2025 and 05/30/2025\"\n\n");
+
+        response.append("## Booking Information Queries\n\n");
+        response.append("- Enter your booking confirmation code (e.g., \"VxbDqQbpZi\")\n");
+        response.append("- \"Check my booking with confirmation code ABC123\"\n\n");
+
+        response.append("## Date Format Guidelines\n\n");
+        response.append("For the most reliable results when checking availability:\n\n");
+        response.append("- Use the format \"from DD/MM to DD/MM\" (e.g., \"from 23/5 to 30/5\")\n");
+        response.append("- Or use MM/DD/YYYY format (e.g., \"05/23/2025\")\n\n");
+
+        response.append("## Tips for Best Results\n\n");
+        response.append("1. **Keep queries simple and direct**\n");
+        response.append("   - Use the exact phrases shown above\n");
+        response.append("   - Avoid complex or lengthy questions\n\n");
+
+        response.append("2. **For room availability**\n");
+        response.append("   - Always provide specific dates in the recommended formats\n");
+        response.append("   - The \"from X to Y\" format works best\n\n");
+
+        response.append("3. **For room types**\n");
+        response.append("   - Use the simple queries listed above\n");
+
+        return response.toString();
     }
 
     /**

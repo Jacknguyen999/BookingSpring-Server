@@ -27,9 +27,9 @@ public class ChatbotService {
 
     @Autowired
     public ChatbotService(GeminiApiClient geminiApiClient,
-                         ChatSessionRepository chatSessionRepository,
-                         ChatbotIntentService chatbotIntentService,
-                         BookingIntegrationService bookingIntegrationService) {
+                        ChatSessionRepository chatSessionRepository,
+                        ChatbotIntentService chatbotIntentService,
+                        BookingIntegrationService bookingIntegrationService) {
         this.geminiApiClient = geminiApiClient;
         this.chatSessionRepository = chatSessionRepository;
         this.chatbotIntentService = chatbotIntentService;
