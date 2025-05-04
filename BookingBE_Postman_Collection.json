@@ -544,6 +544,330 @@
       }
     }
   ],
+  "item": [
+    {
+      "name": "Chatbot",
+      "description": "Endpoints for interacting with the hotel chatbot",
+      "item": [
+        {
+          "name": "Chat Message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"message\": \"Show me the types of rooms available\",\n    \"userId\": \"user123\",\n    \"sessionId\": null\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8484/api/chatbot/chat",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["api", "chatbot", "chat"]
+            },
+            "description": "Send a message to the chatbot and get a response. This endpoint processes natural language queries about room types, availability, and bookings."
+          },
+          "response": [
+            {
+              "name": "Room Types Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"message\": \"Show me the types of rooms available\",\n    \"userId\": \"user123\",\n    \"sessionId\": null\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8484/api/chatbot/chat",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8484",
+                  "path": ["api", "chatbot", "chat"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"response\": \"# Available Room Types\\n\\n## **Studio Room**\\n* **Description:** Comfortable studio with queen bed\\n* **Price:** $123.00 per night\\n* **Available rooms:** 1\\n\\n## **Studio2**\\n* **Description:** A beautiful studio room with two beds\\n* **Price:** $12.00 per night\\n* **Available rooms:** 2\\n\\nTo check availability for specific dates, please tell me your check-in and check-out dates.\",\n    \"success\": true,\n    \"sessionId\": \"session-123\",\n    \"timestamp\": \"2023-05-01T12:00:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Check Room Availability",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"message\": \"from 23/5 to 30/5\",\n    \"userId\": \"user123\",\n    \"sessionId\": \"session-123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8484/api/chatbot/chat",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["api", "chatbot", "chat"]
+            },
+            "description": "Check room availability for specific dates using the chatbot."
+          },
+          "response": [
+            {
+              "name": "Room Availability Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"message\": \"from 23/5 to 30/5\",\n    \"userId\": \"user123\",\n    \"sessionId\": \"session-123\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8484/api/chatbot/chat",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8484",
+                  "path": ["api", "chatbot", "chat"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"response\": \"Checking availability for your stay from **May 23, 2024** to **May 30, 2024** (7 nights)...\\n\\nPlease wait a moment while I check our real-time availability data.\\n\\nThe following room types are available:\\n\\n## **Studio Room**\\n* **Description:** Comfortable studio with queen bed\\n* **Price:** $123.00 per night\\n* **Total for 7 nights:** $861.00\\n* **Available rooms:** 1\\n\\n## **Studio2**\\n* **Description:** A beautiful studio room with two beds\\n* **Price:** $12.00 per night\\n* **Total for 7 nights:** $84.00\\n* **Available rooms:** 2\\n\\nWould you like to proceed with a reservation? If so, please let me know which room type you prefer.\",\n    \"success\": true,\n    \"sessionId\": \"session-123\",\n    \"timestamp\": \"2023-05-01T12:05:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Room Types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8484/api/chatbot/room-types",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["api", "chatbot", "room-types"]
+            },
+            "description": "Get a list of available room types with details directly without using the chat interface."
+          },
+          "response": [
+            {
+              "name": "Room Types Direct Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8484/api/chatbot/room-types",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8484",
+                  "path": ["api", "chatbot", "room-types"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"response\": \"# Available Room Types\\n\\n## **Studio Room**\\n* **Description:** Comfortable studio with queen bed\\n* **Price:** $123.00 per night\\n* **Available rooms:** 1\\n\\n## **Studio2**\\n* **Description:** A beautiful studio room with two beds\\n* **Price:** $12.00 per night\\n* **Available rooms:** 2\\n\\nTo check availability for specific dates, please tell me your check-in and check-out dates.\",\n    \"success\": true,\n    \"timestamp\": \"2023-05-01T12:00:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Check Booking by Confirmation Code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"message\": \"VxbDqQbpZi\",\n    \"userId\": \"user123\",\n    \"sessionId\": \"session-123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8484/api/chatbot/chat",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["api", "chatbot", "chat"]
+            },
+            "description": "Check booking details using a confirmation code through the chatbot."
+          },
+          "response": [
+            {
+              "name": "Booking Details Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"message\": \"VxbDqQbpZi\",\n    \"userId\": \"user123\",\n    \"sessionId\": \"session-123\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8484/api/chatbot/chat",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8484",
+                  "path": ["api", "chatbot", "chat"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"response\": \"# Booking Information\\n\\n## Reservation Details\\n\\n**Confirmation Code:** VxbDqQbpZi\\n**Guest:** John Doe\\n**Email:** john.doe@example.com\\n\\n## Stay Information\\n\\n**Room Type:** Studio Room\\n**Check-in Date:** Monday, May 23, 2024\\n**Check-out Date:** Monday, May 30, 2024\\n**Length of Stay:** 7 nights\\n\\n## Guest Information\\n\\n**Number of Adults:** 2\\n**Number of Children:** 1\\n**Total Guests:** 3\\n\\nThank you for choosing our hotel. We look forward to welcoming you!\",\n    \"success\": true,\n    \"sessionId\": \"session-123\",\n    \"timestamp\": \"2023-05-01T12:10:00\"\n}"
+            },
+            {
+              "name": "Booking Not Found Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"message\": \"ABC123\",\n    \"userId\": \"user123\",\n    \"sessionId\": \"session-123\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8484/api/chatbot/chat",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8484",
+                  "path": ["api", "chatbot", "chat"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"response\": \"# Booking Not Found\\n\\nI could not find any booking with confirmation code: **ABC123**\\n\\nThis could be due to one of the following reasons:\\n\\n1. The confirmation code may be incorrect\\n2. The booking may have been cancelled\\n3. The booking may not exist in our system\\n\\nPlease check your confirmation code and try again, or contact our customer support for assistance.\",\n    \"success\": true,\n    \"sessionId\": \"session-123\",\n    \"timestamp\": \"2023-05-01T12:15:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Help",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"message\": \"What questions can I ask?\",\n    \"userId\": \"user123\",\n    \"sessionId\": \"session-123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8484/api/chatbot/chat",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["api", "chatbot", "chat"]
+            },
+            "description": "Get help information about what queries the chatbot can handle."
+          },
+          "response": [
+            {
+              "name": "Help Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"message\": \"What questions can I ask?\",\n    \"userId\": \"user123\",\n    \"sessionId\": \"session-123\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8484/api/chatbot/chat",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8484",
+                  "path": ["api", "chatbot", "chat"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"response\": \"# What questions can I ask?\\n\\n## Room Types Queries\\n\\n- \\\"Show me the types of rooms available\\\"\\n- \\\"What room types do you have?\\\"\\n- \\\"List room types\\\"\\n\\n## Room Availability Queries\\n\\n- \\\"from 23/5 to 30/5\\\"\\n- \\\"Check if you have rooms available between 05/23/2025 and 05/30/2025\\\"\\n\\n## Booking Information Queries\\n\\n- Enter your booking confirmation code (e.g., \\\"VxbDqQbpZi\\\")\\n- \\\"Check my booking with confirmation code ABC123\\\"\\n\\n## Date Format Guidelines\\n\\nFor the most reliable results when checking availability:\\n\\n- Use the format \\\"from DD/MM to DD/MM\\\" (e.g., \\\"from 23/5 to 30/5\\\")\\n- Or use MM/DD/YYYY format (e.g., \\\"05/23/2025\\\")\\n\\n## Tips for Best Results\\n\\n1. **Keep queries simple and direct**\\n   - Use the exact phrases shown above\\n   - Avoid complex or lengthy questions\\n\\n2. **For room availability**\\n   - Always provide specific dates in the recommended formats\\n   - The \\\"from X to Y\\\" format works best\\n\\n3. **For room types**\\n   - Use the simple queries listed above\",\n    \"success\": true,\n    \"sessionId\": \"session-123\",\n    \"timestamp\": \"2023-05-01T12:20:00\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "variable": [
     {
       "key": "token",
