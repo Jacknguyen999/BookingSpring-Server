@@ -66,6 +66,10 @@ public class Booking {
 
     private String bookingConfirmationCode;
 
+    private String paymentStatus = "PENDING"; // PENDING, PAID, FAILED
+
+    @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Payment payment;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")

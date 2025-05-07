@@ -55,6 +55,7 @@ public class BookingServiceImp implements BookingService {
 
             String bookingConfirmationCode = Utils.generateRandomString(10);
             bookingRequest.setBookingConfirmationCode(bookingConfirmationCode);
+            bookingRequest.setPaymentStatus("PENDING");
 
             bookingRepository.save(bookingRequest);
 

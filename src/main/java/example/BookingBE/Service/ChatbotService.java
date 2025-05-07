@@ -3,7 +3,7 @@ package example.BookingBE.Service;
 import example.BookingBE.model.ChatMessage;
 import example.BookingBE.model.ChatResponse;
 import example.BookingBE.model.ChatSession;
-import example.BookingBE.repository.ChatSessionRepository;
+import example.BookingBE.Repository.ChatSessionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ChatbotService {

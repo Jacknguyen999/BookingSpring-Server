@@ -1,4 +1,4 @@
-package example.BookingBE.repository;
+package example.BookingBE.Repository;
 
 import example.BookingBE.model.ChatMessage;
 import example.BookingBE.model.ChatSession;

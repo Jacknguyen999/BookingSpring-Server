@@ -4,6 +4,7 @@ package example.BookingBE.Response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import example.BookingBE.DTO.BookingDTO;
+import example.BookingBE.DTO.PaymentDTO;
 import example.BookingBE.DTO.RoomDTO;
 import example.BookingBE.DTO.UserDTO;
 import lombok.Data;
@@ -29,9 +30,15 @@ public class ResponseAPI {
     private UserDTO user;
     private RoomDTO room;
     private BookingDTO booking;
+    private PaymentDTO payment;
     private List<UserDTO> userList;
     private List<RoomDTO> RoomList;
     private List<BookingDTO> bookingList;
+    private List<PaymentDTO> paymentList;
+
+    // Stripe-specific fields
+    private String clientSecret;
+    private String paymentIntentId;
 
 
 }

@@ -25,6 +25,10 @@ public class BookingDTO {
 
     private String bookingConfirmationCode;
 
+    private String paymentStatus;
+
+    private PaymentDTO payment;
+
     private UserDTO user;
 
     private RoomDTO room;

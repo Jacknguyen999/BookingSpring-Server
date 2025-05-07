@@ -1,9 +1,11 @@
 package example.BookingBE.Utils;
 
 import example.BookingBE.DTO.BookingDTO;
+import example.BookingBE.DTO.PaymentDTO;
 import example.BookingBE.DTO.RoomDTO;
 import example.BookingBE.DTO.UserDTO;
 import example.BookingBE.Entity.Booking;
+import example.BookingBE.Entity.Payment;
 import example.BookingBE.Entity.Room;
 import example.BookingBE.Entity.User;
 import org.springframework.stereotype.Service;
@@ -73,9 +75,24 @@ public class Utils {
         bookingDTO.setNumOfChildren(booking.getNumOfChildren());
         bookingDTO.setTotalNumberOfGuests(booking.getTotalNumberOfGuests());
         bookingDTO.setBookingConfirmationCode(booking.getBookingConfirmationCode());
-
+        bookingDTO.setPaymentStatus(booking.getPaymentStatus());
 
         return bookingDTO;
+    }
+
+    public static PaymentDTO mapPaymentEntityToPaymentDTO(Payment payment) {
+        PaymentDTO paymentDTO = new PaymentDTO();
+        paymentDTO.setId(payment.getId());
+        paymentDTO.setPaymentIntentId(payment.getPaymentIntentId());
+        paymentDTO.setAmount(payment.getAmount());
+        paymentDTO.setCurrency(payment.getCurrency());
+        paymentDTO.setStatus(payment.getStatus());
+        paymentDTO.setPaymentMethod(payment.getPaymentMethod());
+        paymentDTO.setCreatedAt(payment.getCreatedAt());
+        paymentDTO.setUpdatedAt(payment.getUpdatedAt());
+        paymentDTO.setReceiptUrl(payment.getReceiptUrl());
+
+        return paymentDTO;
     }
 
     public static RoomDTO mapRoomEntityToRoomDTOPlusBookings(Room room) {
@@ -90,17 +107,22 @@ public class Utils {
 
     }
 
-    public static BookingDTO mapBookingEntityToBookingDTOPlusBookedRoom (Booking booking,boolean mapUser){
+    public static BookingDTO mapBookingEntityToBookingDTOPlusBookedRoom (Booking booking, boolean mapUser){
         BookingDTO bookingDTO = mapBookingEntityToBookingDTO(booking);
 
-        if (mapUser){
+        if (mapUser && booking.getUser() != null){
             bookingDTO.setUser(mapUserEntityToUserDTO(booking.getUser()));
         }
 
-        bookingDTO.setRoom(mapRoomEntityToRoomDTO(booking.getRoom()));
+        if (booking.getRoom() != null) {
+            bookingDTO.setRoom(mapRoomEntityToRoomDTO(booking.getRoom()));
+        }
+
+        if (booking.getPayment() != null) {
+            bookingDTO.setPayment(mapPaymentEntityToPaymentDTO(booking.getPayment()));
+        }
 
         return bookingDTO;
-
     }
 
 
@@ -127,8 +149,11 @@ public class Utils {
     }
 
     public static List<BookingDTO> mapBookingListEntityToBookingDTOList(List<Booking> bookings) {
-
         return bookings.stream().map(Utils::mapBookingEntityToBookingDTO).collect(Collectors.toList());
+    }
+
+    public static List<PaymentDTO> mapPaymentListEntityToPaymentDTOList(List<Payment> payments) {
+        return payments.stream().map(Utils::mapPaymentEntityToPaymentDTO).collect(Collectors.toList());
     }
 
 
