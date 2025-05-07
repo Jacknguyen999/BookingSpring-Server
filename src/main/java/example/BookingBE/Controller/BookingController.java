@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/bookings")
-@Tag(name = "Booking", description = "API for BOoking ")
+@Tag(name = "Booking", description = "API for Booking ")
 
 public class BookingController {
 

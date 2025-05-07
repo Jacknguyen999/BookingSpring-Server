@@ -18,7 +18,7 @@ public interface RoomService {
 
     ResponseAPI deleteRoom(Long roomId);
 
-    ResponseAPI updateRoom(Long roomId, String description, String roomType, BigDecimal roomPrice, List<MultipartFile> photos);
+    ResponseAPI updateRoom(Long roomId, String roomDescription, String roomType, BigDecimal roomPrice, List<MultipartFile> photos);
 
     ResponseAPI getRoomById(Long roomId);
 
@@ -26,5 +26,6 @@ public interface RoomService {
 
     ResponseAPI getAllAvailableRooms();
 
+    ResponseAPI getUnavailableDates(Long roomId);
 
 }

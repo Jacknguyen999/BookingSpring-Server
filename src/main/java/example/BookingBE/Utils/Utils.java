@@ -1,19 +1,15 @@
 package example.BookingBE.Utils;
 
 import example.BookingBE.DTO.BookingDTO;
-import example.BookingBE.DTO.PaymentDTO;
 import example.BookingBE.DTO.RoomDTO;
 import example.BookingBE.DTO.UserDTO;
 import example.BookingBE.Entity.Booking;
-import example.BookingBE.Entity.Payment;
 import example.BookingBE.Entity.Room;
 import example.BookingBE.Entity.User;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 @Service
 public class Utils {
@@ -21,9 +17,6 @@ public class Utils {
     private static final String ALPHANNUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             + "0123456789"
             + "abcdefghijklmnopqrstuvxyz";
-
-
-
 
     public static String generateRandomString(int length) {
         StringBuilder sb = new StringBuilder(length);
@@ -43,28 +36,18 @@ public class Utils {
         userDTO.setEmail(user.getEmail());
         userDTO.setRole(user.getRole());
         userDTO.setPhoneNum(user.getPhoneNum());
-
         return userDTO;
     }
 
     public static RoomDTO mapRoomEntityToRoomDTO(Room room) {
         RoomDTO roomDTO = new RoomDTO();
-
-        // Ánh xạ các trường và in log để kiểm tra
         roomDTO.setId(room.getId());
-//        System.out.println("Mapping ID: " + room.getId());
         roomDTO.setRoomType(room.getRoomType());
-//        System.out.println("Mapping Room Type: " + room.getRoomType());
         roomDTO.setRoomPrice(room.getRoomPrice());
-//        System.out.println("Mapping Room Price: " + room.getRoomPrice());
         roomDTO.setRoomImageUrl(room.getRoomImageUrl());
-//        System.out.println("Mapping Room Image URL: " + room.getRoomImageUrl());
         roomDTO.setRoomDescription(room.getRoomDescription());
-//        System.out.println("Mapping Room Description: " + room.getRoomDescription());
-
         return roomDTO;
     }
-
 
     public static BookingDTO mapBookingEntityToBookingDTO(Booking booking) {
         BookingDTO bookingDTO = new BookingDTO();
@@ -75,27 +58,13 @@ public class Utils {
         bookingDTO.setNumOfChildren(booking.getNumOfChildren());
         bookingDTO.setTotalNumberOfGuests(booking.getTotalNumberOfGuests());
         bookingDTO.setBookingConfirmationCode(booking.getBookingConfirmationCode());
-        bookingDTO.setPaymentStatus(booking.getPaymentStatus());
-
+        bookingDTO.setTotalPrice(booking.getTotalPrice());
         return bookingDTO;
     }
 
-    public static PaymentDTO mapPaymentEntityToPaymentDTO(Payment payment) {
-        PaymentDTO paymentDTO = new PaymentDTO();
-        paymentDTO.setId(payment.getId());
-        paymentDTO.setPaymentIntentId(payment.getPaymentIntentId());
-        paymentDTO.setAmount(payment.getAmount());
-        paymentDTO.setCurrency(payment.getCurrency());
-        paymentDTO.setStatus(payment.getStatus());
-        paymentDTO.setPaymentMethod(payment.getPaymentMethod());
-        paymentDTO.setCreatedAt(payment.getCreatedAt());
-        paymentDTO.setUpdatedAt(payment.getUpdatedAt());
-        paymentDTO.setReceiptUrl(payment.getReceiptUrl());
-
-        return paymentDTO;
-    }
-
-    public static RoomDTO mapRoomEntityToRoomDTOPlusBookings(Room room) {
+    public static List<UserDTO> mapUserListEntityToUserDTOList(List<User> users) {
+        return users.stream().map(Utils::mapUserEntityToUserDTO).collect(Collectors.toList());
+    }    public static RoomDTO mapRoomEntityToRoomDTOPlusBookings(Room room) {
         RoomDTO roomDTO = mapRoomEntityToRoomDTO(room);
 
         if (room.getBookings() != null){
@@ -118,9 +87,7 @@ public class Utils {
             bookingDTO.setRoom(mapRoomEntityToRoomDTO(booking.getRoom()));
         }
 
-        if (booking.getPayment() != null) {
-            bookingDTO.setPayment(mapPaymentEntityToPaymentDTO(booking.getPayment()));
-        }
+        
 
         return bookingDTO;
     }
@@ -139,9 +106,7 @@ public class Utils {
         return userDTO;
     }
 
-    public static List<UserDTO> mapUserListEntityToUserDTOList(List<User> users) {
-        return users.stream().map(Utils::mapUserEntityToUserDTO).collect(Collectors.toList());
-    }
+   
 
     public static List<RoomDTO> mapRoomListEntityToRoomDTOList(List<Room> room) {
 
@@ -151,11 +116,4 @@ public class Utils {
     public static List<BookingDTO> mapBookingListEntityToBookingDTOList(List<Booking> bookings) {
         return bookings.stream().map(Utils::mapBookingEntityToBookingDTO).collect(Collectors.toList());
     }
-
-    public static List<PaymentDTO> mapPaymentListEntityToPaymentDTOList(List<Payment> payments) {
-        return payments.stream().map(Utils::mapPaymentEntityToPaymentDTO).collect(Collectors.toList());
-    }
-
-
-
 }

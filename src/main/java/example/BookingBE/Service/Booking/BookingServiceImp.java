@@ -1,6 +1,5 @@
 package example.BookingBE.Service.Booking;
 
-
 import example.BookingBE.DTO.BookingDTO;
 import example.BookingBE.DTO.UserDTO;
 import example.BookingBE.Entity.Booking;
@@ -10,6 +9,7 @@ import example.BookingBE.Exception.GlobalException;
 import example.BookingBE.Repository.BookingRepository;
 import example.BookingBE.Repository.RoomRepository;
 import example.BookingBE.Repository.UserRepository;
+import example.BookingBE.Request.BookingRequest;
 import example.BookingBE.Response.ResponseAPI;
 import example.BookingBE.Utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class BookingServiceImp implements BookingService {
@@ -25,14 +25,11 @@ public class BookingServiceImp implements BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
-
     @Autowired
     private UserRepository userRepository;
 
-
     @Autowired
     private RoomRepository roomRepository;
-
 
     @Override
     public ResponseAPI saveBooking(Long roomId, Long userId, Booking bookingRequest) {
@@ -52,26 +49,21 @@ public class BookingServiceImp implements BookingService {
 
             bookingRequest.setRoom(room);
             bookingRequest.setUser(user);
+            bookingRequest.calculateTotalPrice(); // Calculate total price
 
             String bookingConfirmationCode = Utils.generateRandomString(10);
             bookingRequest.setBookingConfirmationCode(bookingConfirmationCode);
-            bookingRequest.setPaymentStatus("PENDING");
-
+            
             bookingRepository.save(bookingRequest);
 
             user.getUserBookings().add(bookingRequest);
             userRepository.save(user);
 
-
             response.setStatusCode(200);
             response.setMessage("Success");
             response.setBookingConfirmationCode(bookingConfirmationCode);
 
-
             UserDTO userDTO = Utils.mapUserEntityToUserDTOPLusUserBookingAndRoom(user);
-
-//            response.setUser(userDTO);
-
 
         } catch (GlobalException e) {
             response.setStatusCode(404);
@@ -80,7 +72,6 @@ public class BookingServiceImp implements BookingService {
             response.setStatusCode(500);
             response.setMessage("Error saving booking " +e.getMessage());
         }
-
 
         return response;
     }

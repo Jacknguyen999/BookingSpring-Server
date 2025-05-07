@@ -13,5 +13,4 @@ public interface BookingService {
 
     ResponseAPI cancelBooking(Long bookingId);
 
-
 }

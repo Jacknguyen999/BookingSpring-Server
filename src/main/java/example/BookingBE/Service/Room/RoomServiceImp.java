@@ -2,8 +2,10 @@ package example.BookingBE.Service.Room;
 
 import example.BookingBE.DTO.RoomDTO;
 import example.BookingBE.Entity.Room;
+import example.BookingBE.Entity.Booking;
 import example.BookingBE.Exception.GlobalException;
 import example.BookingBE.Repository.RoomRepository;
+import example.BookingBE.Repository.BookingRepository;
 import example.BookingBE.Response.ResponseAPI;
 import example.BookingBE.Service.AwsS3ServiceImp;
 import example.BookingBE.Utils.Utils;
@@ -24,7 +26,8 @@ public class RoomServiceImp implements RoomService {
     @Autowired
     private RoomRepository roomRepository;
 
-
+    @Autowired
+    private BookingRepository bookingRepository;
 
     @Autowired
     private AwsS3ServiceImp awsS3Service;
@@ -216,6 +219,41 @@ public class RoomServiceImp implements RoomService {
             response.setMessage("Error saving a room " + e.getMessage());
         }
 
+        return response;
+    }
+
+    @Override
+    public ResponseAPI getUnavailableDates(Long roomId) {
+        ResponseAPI response = new ResponseAPI();
+        try {
+            Room room = roomRepository.findById(roomId).orElse(null);
+            if (room == null) {
+                response.setStatusCode(404);
+                response.setMessage("Room not found");
+                return response;
+            }
+
+            List<Booking> bookings = bookingRepository.findByRoomId(roomId);
+            List<LocalDate> unavailableDates = new ArrayList<>();
+
+            for (Booking booking : bookings) {
+                LocalDate startDate = booking.getCheckInDate();
+                LocalDate endDate = booking.getCheckOutDate();
+                LocalDate currentDate = startDate;
+
+                while (!currentDate.isAfter(endDate)) {
+                    unavailableDates.add(currentDate);
+                    currentDate = currentDate.plusDays(1);
+                }
+            }
+
+            response.setStatusCode(200);
+            response.setMessage("Successfully retrieved unavailable dates");
+            response.setDates(unavailableDates);
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("Error getting unavailable dates: " + e.getMessage());
+        }
         return response;
     }
 }

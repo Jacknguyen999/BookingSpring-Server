@@ -1,15 +1,15 @@
 package example.BookingBE.Entity;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Data
 @AllArgsConstructor
@@ -17,8 +17,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "bookings")
 public class Booking {
-
-
 
     public @NotNull(message = "check In Date is mandatory") LocalDate getCheckInDate() {
         return checkInDate;
@@ -46,7 +44,6 @@ public class Booking {
         return numOfChildren;
     }
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -66,25 +63,27 @@ public class Booking {
 
     private String bookingConfirmationCode;
 
-    private String paymentStatus = "PENDING"; // PENDING, PAID, FAILED
-
-    @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Payment payment;
+    @Column(nullable = false)
+    private BigDecimal totalPrice;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private Room room;
-
 
     public void setTotalNumberOfGuests() {
         this.totalNumberOfGuests = this.numOfAdults + this.numOfChildren;
     }
 
+    public void calculateTotalPrice() {
+        if (room != null && checkInDate != null && checkOutDate != null) {
+            long nights = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+            this.totalPrice = room.getRoomPrice().multiply(BigDecimal.valueOf(nights));
+        }
+    }
 
     public void setNumOfAdults(@Min(value = 1, message = "Number of adults must be at least 1") int numOfAdults) {
         this.numOfAdults = numOfAdults;
@@ -106,6 +105,7 @@ public class Booking {
                 ", numOfChildren=" + numOfChildren +
                 ", totalNumberOfGuests=" + totalNumberOfGuests +
                 ", bookingConfirmationCode='" + bookingConfirmationCode + '\'' +
+                ", totalPrice=" + totalPrice +
                 '}';
     }
 }

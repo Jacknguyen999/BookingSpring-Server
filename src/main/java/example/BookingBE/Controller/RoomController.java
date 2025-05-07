@@ -111,4 +111,10 @@ public class RoomController {
         ResponseAPI response = roomService.updateRoom(roomId, roomDescription, roomType, roomPrice, photos);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
+
+    @GetMapping("/unavailable-dates/{roomId}")
+    public ResponseEntity<ResponseAPI> getUnavailableDates(@PathVariable Long roomId) {
+        ResponseAPI response = roomService.getUnavailableDates(roomId);
+        return ResponseEntity.status(response.getStatusCode()).body(response);
+    }
 }
