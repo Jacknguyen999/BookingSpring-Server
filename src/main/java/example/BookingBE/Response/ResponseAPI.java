@@ -11,6 +11,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Getter
@@ -31,6 +32,7 @@ public class ResponseAPI {
     private BookingDTO booking;
     private List<BookingDTO> bookingList;
     private List<LocalDate> dates;
+    private Map<String, Object> data;
 
     public ResponseAPI() {
     }
@@ -38,6 +40,12 @@ public class ResponseAPI {
     public ResponseAPI(int statusCode, String message) {
         this.statusCode = statusCode;
         this.message = message;
+    }
+
+    public ResponseAPI(int statusCode, String message, Map<String, Object> data) {
+        this.statusCode = statusCode;
+        this.message = message;
+        this.data = data;
     }
 
     public int getStatusCode() {
@@ -142,6 +150,14 @@ public class ResponseAPI {
 
     public void setDates(List<LocalDate> dates) {
         this.dates = dates;
+    }
+
+    public Map<String, Object> getData() {
+        return data;
+    }
+
+    public void setData(Map<String, Object> data) {
+        this.data = data;
     }
 
 }

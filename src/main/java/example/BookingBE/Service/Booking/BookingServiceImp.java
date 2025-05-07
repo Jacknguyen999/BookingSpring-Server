@@ -35,16 +35,16 @@ public class BookingServiceImp implements BookingService {
     public ResponseAPI saveBooking(Long roomId, Long userId, Booking bookingRequest) {
         ResponseAPI response = new ResponseAPI();
 
-        try{
-            if ( bookingRequest.getCheckOutDate().isBefore(bookingRequest.getCheckInDate())){
+        try {
+            if (bookingRequest.getCheckOutDate().isBefore(bookingRequest.getCheckInDate())) {
                 throw new IllegalArgumentException("Check in date must come after check out date");
             }
             Room room = roomRepository.findById(roomId).orElseThrow(() -> new GlobalException("Room not found"));
             User user = userRepository.findById(userId).orElseThrow(() -> new GlobalException("User not found"));
             List<Booking> existingBooking = room.getBookings();
 
-            if ( !roomIsAvailable(bookingRequest,existingBooking)){
-                throw  new GlobalException("Room is not available at the moment");
+            if (!roomIsAvailable(bookingRequest, existingBooking)) {
+                throw new GlobalException("Room is not available at the moment");
             }
 
             bookingRequest.setRoom(room);
@@ -54,23 +54,22 @@ public class BookingServiceImp implements BookingService {
             String bookingConfirmationCode = Utils.generateRandomString(10);
             bookingRequest.setBookingConfirmationCode(bookingConfirmationCode);
             
-            bookingRepository.save(bookingRequest);
+            Booking savedBooking = bookingRepository.save(bookingRequest);
 
-            user.getUserBookings().add(bookingRequest);
+            user.getUserBookings().add(savedBooking);
             userRepository.save(user);
 
             response.setStatusCode(200);
             response.setMessage("Success");
             response.setBookingConfirmationCode(bookingConfirmationCode);
-
-            UserDTO userDTO = Utils.mapUserEntityToUserDTOPLusUserBookingAndRoom(user);
+            response.setBooking(Utils.mapBookingEntityToBookingDTOPlusBookedRoom(savedBooking, true));
 
         } catch (GlobalException e) {
             response.setStatusCode(404);
             response.setMessage(e.getMessage());
-        }  catch (Exception e) {
+        } catch (Exception e) {
             response.setStatusCode(500);
-            response.setMessage("Error saving booking " +e.getMessage());
+            response.setMessage("Error saving booking " + e.getMessage());
         }
 
         return response;

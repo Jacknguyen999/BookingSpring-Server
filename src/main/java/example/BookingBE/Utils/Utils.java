@@ -59,6 +59,7 @@ public class Utils {
         bookingDTO.setTotalNumberOfGuests(booking.getTotalNumberOfGuests());
         bookingDTO.setBookingConfirmationCode(booking.getBookingConfirmationCode());
         bookingDTO.setTotalPrice(booking.getTotalPrice());
+        bookingDTO.setPaymentStatus(booking.getPaymentStatus());
         return bookingDTO;
     }
 

@@ -28,6 +28,8 @@ public class BookingDTO {
 
     private BigDecimal totalPrice;
 
+    private String paymentStatus;
+
     private UserDTO user;
 
     private RoomDTO room;
