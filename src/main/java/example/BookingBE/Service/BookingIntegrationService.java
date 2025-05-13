@@ -433,7 +433,6 @@ public class BookingIntegrationService {
         }
 
         for (Booking booking : bookings) {
-            // Check if there's an overlap with existing booking
             if (!(booking.getCheckOutDate().isBefore(checkIn) || booking.getCheckInDate().isAfter(checkOut))) {
                 return false;
             }

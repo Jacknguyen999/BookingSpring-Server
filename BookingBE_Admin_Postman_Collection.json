@@ -1,0 +1,716 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-g7h8-i9j0-admin12345",
+    "name": "BookingBE Admin API",
+    "description": "Admin-focused API collection for the Hotel Booking Backend System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "description": "Admin authentication endpoints",
+      "item": [
+        {
+          "name": "Admin Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8484/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["auth", "login"]
+            },
+            "description": "Login as admin to get JWT token"
+          },
+          "response": []
+        },
+        {
+          "name": "Register Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Admin User\",\n    \"email\": \"admin@example.com\",\n    \"phoneNum\": \"1234567890\",\n    \"password\": \"admin123\",\n    \"role\": \"ADMIN\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8484/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["auth", "register"]
+            },
+            "description": "Register a new admin user"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User Management",
+      "description": "Admin endpoints for user management",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/users/all",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["users", "all"]
+            },
+            "description": "Get all users (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/users/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["users", "1"]
+            },
+            "description": "Get user details by ID (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Booking History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/users/booking-history/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["users", "booking-history", "1"]
+            },
+            "description": "Get booking history for a specific user (Admin only)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Room Management",
+      "description": "Admin endpoints for room management",
+      "item": [
+        {
+          "name": "Add New Room",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "photos",
+                  "type": "file",
+                  "description": "Room image"
+                },
+                {
+                  "key": "roomType",
+                  "value": "Deluxe",
+                  "type": "text"
+                },
+                {
+                  "key": "roomPrice",
+                  "value": "150.00",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Spacious deluxe room with king-size bed and ocean view",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8484/room/add",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["room", "add"]
+            },
+            "description": "Add a new room (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Rooms",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/room/all",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["room", "all"]
+            },
+            "description": "Get all rooms (Admin access)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Room Types",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/room/types",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["room", "types"]
+            },
+            "description": "Get all available room types (Admin access)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Room by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/room/room-by-id/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["room", "room-by-id", "1"]
+            },
+            "description": "Get room details by ID (Admin access)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Room",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "photos",
+                  "type": "file",
+                  "description": "Room image (optional)"
+                },
+                {
+                  "key": "roomType",
+                  "value": "Deluxe Suite",
+                  "type": "text"
+                },
+                {
+                  "key": "roomPrice",
+                  "value": "180.00",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Updated description: Luxurious deluxe suite with king-size bed, ocean view, and private balcony",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8484/room/update/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["room", "update", "1"]
+            },
+            "description": "Update room details (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Room",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/room/delete/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["room", "delete", "1"]
+            },
+            "description": "Delete a room (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Available Rooms by Date and Type",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/room/available-rooms?checkInDate=2025-06-01&checkOutDate=2025-06-05&roomType=Deluxe",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["room", "available-rooms"],
+              "query": [
+                {
+                  "key": "checkInDate",
+                  "value": "2025-06-01"
+                },
+                {
+                  "key": "checkOutDate",
+                  "value": "2025-06-05"
+                },
+                {
+                  "key": "roomType",
+                  "value": "Deluxe"
+                }
+              ]
+            },
+            "description": "Get available rooms by date range and room type (Admin access)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Booking Management",
+      "description": "Admin endpoints for booking management",
+      "item": [
+        {
+          "name": "Get All Bookings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/bookings/all-booking",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["bookings", "all-booking"]
+            },
+            "description": "Get all bookings (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Booking by Confirmation Code",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/bookings/get-by-confirmation-code/ABC123XYZ",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["bookings", "get-by-confirmation-code", "ABC123XYZ"]
+            },
+            "description": "Get booking details by confirmation code (Admin access)"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Booking (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"checkInDate\": \"2025-06-10\",\n    \"checkOutDate\": \"2025-06-15\",\n    \"numOfAdults\": 2,\n    \"numOfChildren\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8484/bookings/book-room/1/2",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["bookings", "book-room", "1", "2"],
+              "description": "roomId=1, userId=2"
+            },
+            "description": "Create a booking for a user (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Booking",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/bookings/cancel/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["bookings", "cancel", "1"]
+            },
+            "description": "Cancel a booking by ID (Admin access)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Payment Management",
+      "description": "Admin endpoints for payment management",
+      "item": [
+        {
+          "name": "Get All Payments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/payments/all",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["payments", "all"]
+            },
+            "description": "Get all payments (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Payment by Booking ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/payments/booking/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["payments", "booking", "1"]
+            },
+            "description": "Get payment information for a specific booking (Admin access)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Payment by Payment Intent ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/payments/payment-intent/pi_123456789",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["payments", "payment-intent", "pi_123456789"]
+            },
+            "description": "Get payment information for a specific payment intent (Admin access)"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Payment Intent (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"bookingId\": 1,\n    \"paymentMethodId\": null,\n    \"returnUrl\": \"http://localhost:3000/admin/payment/success\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8484/payments/create-payment-intent",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["payments", "create-payment-intent"]
+            },
+            "description": "Create a Stripe payment intent for a booking (Admin access)"
+          },
+          "response": []
+        },
+        {
+          "name": "Confirm Payment (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/payments/confirm/pi_123456789",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["payments", "confirm", "pi_123456789"]
+            },
+            "description": "Confirm a payment using the payment intent ID (Admin access)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Chatbot Management",
+      "description": "Admin endpoints for chatbot management",
+      "item": [
+        {
+          "name": "Get All Chat Sessions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/api/chatbot/sessions?userId=user123",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["api", "chatbot", "sessions"],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "user123"
+                }
+              ]
+            },
+            "description": "Get all chat sessions for a user (Admin access)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Chat History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8484/api/chatbot/history?sessionId=session-123",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["api", "chatbot", "history"],
+              "query": [
+                {
+                  "key": "sessionId",
+                  "value": "session-123"
+                }
+              ]
+            },
+            "description": "Get conversation history for a specific session (Admin access)"
+          },
+          "response": []
+        },
+        {
+          "name": "Send Chat Message (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "JWT token received after admin login"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"message\": \"Show me the types of rooms available\",\n    \"userId\": \"admin\",\n    \"sessionId\": null\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8484/api/chatbot/chat",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8484",
+              "path": ["api", "chatbot", "chat"]
+            },
+            "description": "Send a message to the chatbot as admin"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Auto-save the token from admin login response",
+          "if (pm.response.code === 200 && pm.request.url.toString().includes('/auth/login')) {",
+          "    var jsonData = pm.response.json();",
+          "    if (jsonData.token) {",
+          "        pm.environment.set('admin_token', jsonData.token);",
+          "        console.log('Admin token saved to environment');",
+          "    }",
+          "}"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "admin_token",
+      "value": "",
+      "type": "string",
+      "description": "JWT token received after admin login"
+    }
+  ]
+}
